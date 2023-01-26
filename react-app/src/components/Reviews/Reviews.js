@@ -11,7 +11,6 @@ const GetReviews = () => {
   const currentUser = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.review.reviews);
   const userExists = useSelector(state => state.review.reviewExists);
-  // TODO - rename state hooks
   const [test, setTest] = useState(false)
   const [edit, setEdit] = useState(true)
   const [rating, setRating] = useState(0)
@@ -133,9 +132,6 @@ const GetReviews = () => {
     dispatch(sessionActions.getReviews(productId, currentUser?.id))
   }, [dispatch, test, rerender, edit, productId])
 
-  useEffect(() => {
-    dispatch(sessionActions.getReviews(productId, currentUser?.id))
-  }, [dispatch, test, rerender, edit, productId])
 
   return (
     <div id="reviews-main-container">
