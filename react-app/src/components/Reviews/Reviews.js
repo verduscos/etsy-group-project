@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as sessionActions from "../../store/review"
-// import { BsStarFill } from "react-icons/bs"
-// import { AiOutlineStar } from "react-icons/ai"
 import "./Reviews.css"
 import ReviewForm from '../ReviewForm/ReviewForm'
 
