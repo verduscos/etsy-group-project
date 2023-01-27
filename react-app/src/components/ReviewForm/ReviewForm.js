@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import * as sessionActions from "../../store/review"
 import { useParams } from "react-router-dom";
-
 import "./ReviewForm.css"
 
 const CreateReview = () => {
@@ -18,10 +17,8 @@ const CreateReview = () => {
   const [hover, setHover] = useState(0);
   const [displayStars, setDisplayStars] = useState(false)
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
-
     const payload = {
       user_id: currentUser.id,
       product_id: productId,
@@ -64,23 +61,21 @@ const CreateReview = () => {
   }
 
   const ratingBtn = (
-
     <div id="star-rating-container">
       {[...Array(5)].map((s, i) => (
-      <span
+        <span
 
-        key={i}
-        className={i <= (hover || rating) ? "highlight" : "off"}
-        onClick={() => setRating(i)}
-        onMouseEnter={() => setHover(i)}
-        onMouseLeave={() => setHover(rating)}
-      >
-        <span className="stars">★</span>
-      </span>
+          key={i}
+          className={i <= (hover || rating) ? "highlight" : "off"}
+          onClick={() => setRating(i)}
+          onMouseEnter={() => setHover(i)}
+          onMouseLeave={() => setHover(rating)}
+        >
+          <span className="stars">★</span>
+        </span>
       ))}
     </div>
   )
-
 
   return (
     <>
@@ -97,21 +92,7 @@ const CreateReview = () => {
               {errors.rating}
             </div>
           </div>
-
-
-
-
-
-          {/* {displayBtn ?
-
-            { ratingBtn }
-            : null} */}
-
-
-
-
-
-
+          {displayStars ? ratingBtn : null}
 
           <div id='review-pic'>
             <img className="profile-pic" src={currentUser?.profile_pic_url} alt="profile-pic" />

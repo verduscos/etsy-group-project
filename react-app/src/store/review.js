@@ -5,13 +5,13 @@ const EDIT_REVIEW = 'session/EDIT_REVIEW'
 
 const createReview = (review) => ({
     type: CREATE_REVIEW,
-    payload: review
+    review
 })
 
-const fetchReviews = (reviews, haveuserleftreview) =>({
+const fetchReviews = (reviews, userReviewed) =>({
     type: GET_REVIEWS,
-    payload: reviews,
-    reviewExists: haveuserleftreview
+    reviews,
+    userReviewed
 })
 
 const deleteAReview = (id) => ({
@@ -23,9 +23,6 @@ const updateReview = (id) => ({
     type: EDIT_REVIEW,
     payload: id
 })
-
-const initialState = { reviews: null};
-
 
 export const newReview = (payload) => async (dispatch) => {
     const response = await fetch("/api/reviews/", {
@@ -90,7 +87,7 @@ export const getReviews = (product_id, user_id) => async (dispatch) => {
             haveuserleftreview = true
         }
     })
-    dispatch(fetchReviews(data, haveuserleftreview))
+    dispatch(fetchReviews(data.reviews, haveuserleftreview))
 }
 
 
@@ -105,11 +102,14 @@ export const deleteReview = (review_id) => async (dispatch) => {
     }
 }
 
+const initialState = { reviews: null};
 
-export default function reviewsReducer(state = initialState, action){
+export default function reviewsReducer(state = {}, action){
     switch(action.type) {
         case GET_REVIEWS:
-            return {...state, reviews: action.payload, reviewExists: action.reviewExists}
+            const allReviews = {...state, all: action.reviews, userReviewed: action.userReviewed}
+            console.log(allReviews)
+            return allReviews
         case CREATE_REVIEW:
             const newState = { ...state };
             newState.reviews.reviews.unshift(action.payload)

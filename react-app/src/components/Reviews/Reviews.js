@@ -9,8 +9,8 @@ import ReviewForm from '../ReviewForm/ReviewForm'
 const GetReviews = () => {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.session.user);
-  const reviews = useSelector(state => state.review.reviews);
-  const userExists = useSelector(state => state.review.reviewExists);
+  const reviews = useSelector(state => state.reviews.all);
+  const userExists = useSelector(state => state.reviews.userReviewed);
   const [test, setTest] = useState(false)
   const [edit, setEdit] = useState(true)
   const [rating, setRating] = useState(0)
