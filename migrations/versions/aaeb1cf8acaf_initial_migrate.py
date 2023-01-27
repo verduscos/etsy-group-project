@@ -1,13 +1,17 @@
 """initial migrate
 
 Revision ID: aaeb1cf8acaf
-Revises: 
+Revises:
 Create Date: 2022-12-01 18:18:09.612045
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+# render
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
 revision = 'aaeb1cf8acaf'
@@ -92,6 +96,16 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
+
+    # render
+    if environment == "production":
+      op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+      op.execute(f"ALTER TABLE products SET SCHEMA {SCHEMA};")
+      op.execute(f"ALTER TABLE cart_items SET SCHEMA {SCHEMA};")
+      op.execute(f"ALTER TABLE product_images SET SCHEMA {SCHEMA};")
+      op.execute(f"ALTER TABLE purchases SET SCHEMA {SCHEMA};")
+      op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
+
 
 
 def downgrade():

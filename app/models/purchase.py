@@ -1,12 +1,14 @@
-from .db import db
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 
 class Purchase(db.Model):
     __tablename__ = "purchases"
+    if environment == "production":
+      __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("products.id")), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now(), nullable=False)
     updated_at = db.Column(db.DateTime, default=db.func.now(), nullable=False)
@@ -23,4 +25,3 @@ class Purchase(db.Model):
             "created_at": self.created_at,
             "updated_at": self.updated_at,
         }
-

@@ -122,7 +122,6 @@ const AddToCart = ({ product }) => {
     </>
   );
 
-  // console.log(product)
 
   return (
     <>

@@ -72,8 +72,6 @@ const PurchaseCart = ({ cartItems, setWasPurchased, setShoppingCartErrors }) => 
   };
 
 
-  console.log(itemsInCart)
-
   return (
     <>
 

@@ -31,8 +31,6 @@ const ShoppingCart = ({ setShoppingCartErrors }) => {
         // let totalPrice = 0;
         dispatch(get_cart_items(session.user.id)).then((cartItems) => {
 
-            console.log(cartItems)
-
             // for (let i = 0; i < cartItems.length; i++) {
             //     totalPrice =
             //         totalPrice +

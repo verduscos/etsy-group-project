@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from app.models import db, CartItem 
+from app.models import db, CartItem
 
 shopping_cart_routes = Blueprint("shopping_cart", __name__)
 
@@ -20,10 +20,6 @@ def get_cart_items_by_userId(id):
 # IMPORTANT: "/<int:id>" is the id of the cart item.
 @shopping_cart_routes.route("/<int:id>", methods=["PATCH"])
 def update_cart_items(id):
-
-    # Is a number!!!!!!!!
-    print(type(id))
-
     data = request.json
 
     new_quantity = int(data["quantity"])
@@ -49,10 +45,8 @@ def add_cart_item():
     """
     MAKE SURE TO TAKE IN user_id, product_id, and quantity in
     json body in my reducer
-    """ 
+    """
     data = request.json
-
-    # print(data, "-----------------------------------------------------")
 
     product_id = int(data["product_id"])
 
@@ -63,9 +57,6 @@ def add_cart_item():
 
 
     existing_cart_item = CartItem.query.filter(CartItem.user_id == user_id, CartItem.product_id == product_id ).first()
-
-    print(existing_cart_item, "+++++++++++++++++++++")
-
 
     if(existing_cart_item != None):
         current_quantity = existing_cart_item.quantity
@@ -79,7 +70,7 @@ def add_cart_item():
             return {"message": "success"}
         else:
             return {"message": "failure"}
-    
+
 
 
     cart_item = CartItem(user_id = user_id, product_id = product_id, quantity = quantity)
@@ -94,7 +85,7 @@ def add_cart_item():
         return {"message": "success"}
     else:
         return {"message": "failure"}
-    
+
 
 
 
@@ -105,26 +96,12 @@ def delete_cart_item():
 
     data = request.json
 
-    
+
 
     for id in data["items"]:
-        
+
         cart_item = CartItem.query.get(int(id))
         db.session.delete(cart_item)
         db.session.commit()
 
     return {"message": "deleted"}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
