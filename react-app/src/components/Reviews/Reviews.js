@@ -9,8 +9,8 @@ import ReviewForm from '../ReviewForm/ReviewForm'
 const GetReviews = () => {
   const dispatch = useDispatch()
   const currentUser = useSelector(state => state.session.user);
-  const reviews = useSelector(state => state.reviews.all);
-  const userExists = useSelector(state => state.reviews.userReviewed);
+  const reviews = useSelector(state => state.reviews);
+  let userReviewed = useSelector(state => state.reviews.userReviewed);
   const [test, setTest] = useState(false)
   const [edit, setEdit] = useState(true)
   const [rating, setRating] = useState(0)
@@ -21,15 +21,18 @@ const GetReviews = () => {
   const [errors, setErrors] = useState([])
   const [hover, setHover] = useState(0);
   const [displayDelete, setDisplayDelete] = useState(true)
+  let reviewList = Object.values(reviews?.all);
+  reviewList.reverse();
   let { productId } = useParams()
-
 
 
   const handleDelete = (e, id) => {
     e.preventDefault();
     dispatch(sessionActions.deleteReview(id))
-    setTest(!test)
+    // userReviewed = false;
   }
+
+  console.log("============", userReviewed)
 
   const handleEdit = (e) => {
     e.preventDefault()
@@ -130,22 +133,20 @@ const GetReviews = () => {
 
   useEffect(() => {
     dispatch(sessionActions.getReviews(productId, currentUser?.id))
-  }, [dispatch, test, rerender, edit, productId])
+  }, [dispatch])
 
 
   return (
     <div id="reviews-main-container">
       <div id="reviews-title">
-        <p>Reviews for this item <span id="total-reviews-num">{reviews?.reviews?.length}</span></p>
+        <p>Reviews for this item <span id="total-reviews-num">{reviewList.length}</span></p>
       </div>
-      {/* Review Form Component */}
       <div id="review-form-container">
-        {userExists ? null : <ReviewForm />}
+        {userReviewed ? null : <ReviewForm />}
       </div>
 
-      {/* All reviews for currently display listing */}
       <div id="reviews-container">
-        {reviews?.reviews?.map(review => (
+        {reviewList?.map(review => (
           <div id="review-container" key={`review-container-${review?.id}`}>
             <div id="review-row1">
               <img className="profile-pic review-pic" src={review.profile_picture_url} alt={`${review.username}-profile-pic`} />
@@ -158,7 +159,6 @@ const GetReviews = () => {
               <div id="review" key={review.body}>{review.body}</div>
             </div>
 
-            {/* Only display deleteBtn for a review by currentUser */}
             <div id="review-form-container">
               {review.user_id === currentUser?.id ? editForm : null}
             </div>

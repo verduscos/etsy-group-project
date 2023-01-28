@@ -62,7 +62,9 @@ const CreateReview = () => {
 
   const ratingBtn = (
     <div id="star-rating-container">
-      {[...Array(5)].map((s, i) => (
+    {[...Array(5)].map((s, i) => {
+      i += 1;
+      return (
         <span
 
           key={i}
@@ -73,8 +75,9 @@ const CreateReview = () => {
         >
           <span className="stars">★</span>
         </span>
-      ))}
-    </div>
+      );
+    })}
+  </div>
   )
 
   return (
