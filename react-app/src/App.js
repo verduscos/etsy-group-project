@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, HashRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductListingForm from './components/ProductListingForm';
 import ProductImageForm from './components/ProductImageForm';
@@ -47,7 +47,7 @@ function App() {
   }
 
   return (
-    <>
+    <HashRouter>
       <NavBar />
       <Switch>
         <Route path="/" exact={true}>
@@ -93,7 +93,7 @@ function App() {
           <PageNotFound />
         </Route>
       </Switch>
-    </>
+    </HashRouter>
   );
 }
 
