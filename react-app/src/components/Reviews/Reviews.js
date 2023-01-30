@@ -11,12 +11,10 @@ const GetReviews = () => {
   const currentUser = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.reviews);
   let userReviewed = useSelector(state => state.reviews.userReviewed);
-  const [test, setTest] = useState(false)
   const [edit, setEdit] = useState(true)
   const [rating, setRating] = useState(0)
   const [body, setBody] = useState("")
   const [editReviewId, setEditReviewId] = useState(0)
-  const [rerender, setRerender] = useState(false)
   const [displayEdit, setDisplayEdit] = useState(false)
   const [errors, setErrors] = useState([])
   const [hover, setHover] = useState(0);
@@ -29,10 +27,8 @@ const GetReviews = () => {
   const handleDelete = (e, id) => {
     e.preventDefault();
     dispatch(sessionActions.deleteReview(id))
-    // userReviewed = false;
+    userReviewed = false;
   }
-
-  console.log("============", userReviewed)
 
   const handleEdit = (e) => {
     e.preventDefault()
@@ -41,15 +37,11 @@ const GetReviews = () => {
 
   const handleEditSubmit = (e) => {
     e.preventDefault()
-
-    setTest(!rerender)
-
     if (body.length > 1 && rating > 0) {
       setDisplayEdit(false)
       setDisplayDelete(true)
       setEdit(true)
       setErrors([])
-
     }
 
     const payload = {
@@ -76,8 +68,6 @@ const GetReviews = () => {
       <>
         <form id="review_form" onSubmit={handleEditSubmit}>
           <h4>Update Review</h4>
-
-
           <div id="star-rating-container">
             {[...Array(5)].map((s, i) => {
               i += 1;
@@ -94,8 +84,6 @@ const GetReviews = () => {
               );
             })}
           </div>
-
-
           <div>
             {errors.body}
             <div>
@@ -112,7 +100,6 @@ const GetReviews = () => {
           ></textarea>
           <div id="edit-form-btns">
             <button className="btn" onClick={(e) => {
-              setRerender(!rerender)
             }}>Update</button>
             <button onClick={(e) => {
               setEdit(true)
@@ -121,11 +108,6 @@ const GetReviews = () => {
             }} className="btn">Cancel</button>
           </div>
         </form>
-
-        {/* <button onClick={(e) => {
-          setEdit(true)
-          setDisplayEdit(false)
-        }} className="btn">Cancel</button> */}
       </>
     )
   }

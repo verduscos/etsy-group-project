@@ -13,7 +13,6 @@ const CreateReview = () => {
   const [body, setBody] = useState("")
   const [displayBtn, setDisplayBtn] = useState(false)
   const [errors, setErrors] = useState([])
-  const [test, setTest] = useState(false)
   const [hover, setHover] = useState(0);
   const [displayStars, setDisplayStars] = useState(false)
 
@@ -25,7 +24,6 @@ const CreateReview = () => {
       rating,
       body,
     }
-
     dispatch(sessionActions.newReview(payload)).catch(async (res) => {
       const data = await res.json();
       if (data.errors) {
@@ -36,48 +34,43 @@ const CreateReview = () => {
     if (body && rating > 0) {
       setDisplayReviewForm(false)
     }
-    setTest(!test)
   }
 
-  let btn;
-  if (displayBtn) {
-    btn = (
-      <div id="review_btn_container">
-        <button className="review-btn btn"
-          onClick={() => {
-            setErrors([])
-            setBody("")
-            setDisplayBtn(false)
-            setDisplayStars(false)
-          }}>Cancel</button>
-        <button className="review-btn btn">Submit</button>
-      </div>
-
-    )
-  } else {
-    btn = (
-      null
-    )
-  }
+  const formBtns = (
+    <>
+      {displayBtn ?
+        <div id="review_btn_container">
+          <button className="review-btn btn"
+            onClick={() => {
+              setErrors([])
+              setBody("")
+              setDisplayBtn(false)
+              setDisplayStars(false)
+            }}>Cancel</button>
+          <button className="review-btn btn">Submit</button>
+        </div>
+        : null}
+    </>
+  )
 
   const ratingBtn = (
     <div id="star-rating-container">
-    {[...Array(5)].map((s, i) => {
-      i += 1;
-      return (
-        <span
+      {[...Array(5)].map((s, i) => {
+        i += 1;
+        return (
+          <span
 
-          key={i}
-          className={i <= (hover || rating) ? "highlight" : "off"}
-          onClick={() => setRating(i)}
-          onMouseEnter={() => setHover(i)}
-          onMouseLeave={() => setHover(rating)}
-        >
-          <span className="stars">★</span>
-        </span>
-      );
-    })}
-  </div>
+            key={i}
+            className={i <= (hover || rating) ? "highlight" : "off"}
+            onClick={() => setRating(i)}
+            onMouseEnter={() => setHover(i)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            <span className="stars">★</span>
+          </span>
+        );
+      })}
+    </div>
   )
 
   return (
@@ -95,6 +88,7 @@ const CreateReview = () => {
               {errors.rating}
             </div>
           </div>
+
           {displayStars ? ratingBtn : null}
 
           <div id='review-pic'>
@@ -111,12 +105,12 @@ const CreateReview = () => {
             </textarea>
           </div>
 
-          {btn}
+          {formBtns}
+
         </form>
         : null}
     </>
   )
 }
-
 
 export default CreateReview
