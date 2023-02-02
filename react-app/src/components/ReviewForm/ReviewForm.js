@@ -36,6 +36,10 @@ const CreateReview = () => {
     }
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") onSubmit(e);
+  }
+
   const formBtns = (
     <>
       {displayBtn ?
@@ -101,6 +105,7 @@ const CreateReview = () => {
               onChange={(e) => {
                 setBody(e.target.value)
               }}
+              onKeyDown={(e) => handleKeyPress(e)}
             >
             </textarea>
           </div>
