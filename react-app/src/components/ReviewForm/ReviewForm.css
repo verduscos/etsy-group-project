@@ -1,5 +1,4 @@
 #review_form {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,16 +10,11 @@
   border-bottom: solid 1px lightgray;
   height: 30px;
   margin: 20px 0;
-  /* min-height: fit-content; */
-  /* overflow: auto; */
   resize: none;
   width: 500px;
-
-  /* background-color: gray; */
 }
 
 #review_body:focus {
-
   /* remove default outline */
   outline: none !important;
   border-bottom: 1px solid black;
